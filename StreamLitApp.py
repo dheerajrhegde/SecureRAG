@@ -3,9 +3,14 @@ import streamlit as st
 import msal, requests, os
 
 # Configuration
-client_id = os.genenv('AZURE_CLIENT_ID')
+client_id = os.getenv('AZURE_CLIENT_ID')
 client_secret = os.getenv('AZURE_CLIENT_SECRET')
 tenant_id = os.getenv('AZURE_TENANT_ID')
+
+print("client ID: ", client_id)
+print("client secret: ", client_secret)
+print("tenant ID: ", tenant_id)
+
 authority_url = f'https://login.microsoftonline.com/{tenant_id}'
 redirect_uri = 'https://securerag-dheeraj.streamlit.app/'
 scopes = ['https://graph.microsoft.com/.default']
@@ -20,6 +25,7 @@ app = msal.ConfidentialClientApplication(
 # Get the authorization URL to redirect the user for sign-in
 auth_url = app.get_authorization_request_url(redirect_uri=redirect_uri, scopes=scopes,
                                              response_type='code')
+
 
 print(f"Please go to this URL and authorize access: {auth_url}")
 
